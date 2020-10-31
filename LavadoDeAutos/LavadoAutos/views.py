@@ -95,7 +95,7 @@ def registro(request):
     return render(request, 'core/Registro.html', {'slider':slider, 'first':sliderFirst, 'last':sliderLast})
 
 @login_required(login_url='/login')
-@permission_required('LavadoAutos.add_insumo', login_url='/login/')
+@permission_required('LavadoAutos.add_insumos', login_url='/login/')
 def admin_insumos(request):
     insumo = Insumos.objects.all()
     sliderFirst = Slider.objects.first()
@@ -124,7 +124,7 @@ def admin_insumos(request):
     return render(request, 'core/admin_insumos.html', {'lista_insumos':insumo, 'slider':slider, 'first':sliderFirst, 'last':sliderLast})
 
 @login_required(login_url='/login')
-@permission_required('LavadoAutos.delete_insumo', login_url='/login/')
+@permission_required('LavadoAutos.delete_insumos', login_url='/login/')
 def eliminarInsumo(request, id):
     try:
         eliminarInsumo = Insumos.objects.get(cod = id)
@@ -136,7 +136,7 @@ def eliminarInsumo(request, id):
     return redirect(admin_insumos)
 
 @login_required(login_url='/login')
-@permission_required('LavadoAutos.change_insumo', login_url='/login/')
+@permission_required('LavadoAutos.change_insumos', login_url='/login/')
 def modificarInsumo(request, id):
     try:
         sliderFirst = Slider.objects.first()
@@ -148,7 +148,7 @@ def modificarInsumo(request, id):
         return redirect(admin_insumos)
 
 @login_required(login_url='/login')
-@permission_required('LavadoAutos.change_insumo', login_url='/login/')
+@permission_required('LavadoAutos.change_insumos', login_url='/login/')
 def Actualizar(request):
     if request.POST:
         nombre      = request.POST.get("NombreInsumo")

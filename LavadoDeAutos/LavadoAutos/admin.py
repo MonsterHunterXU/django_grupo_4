@@ -9,7 +9,7 @@ class InsumoAdmin(admin.ModelAdmin):
 
 class InstalacionesAdmin(admin.ModelAdmin):
     list_display = ['cod', 'name', 'direccion', 'imagen']
-    search_fields = ['cod', 'name']
+    search_fields = ['cod', 'name','direccion']
     list_filter=['cod','name']
     list_per_page = 10
 
