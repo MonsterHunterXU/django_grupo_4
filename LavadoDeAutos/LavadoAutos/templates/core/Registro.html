@@ -1,0 +1,98 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block container %}
+    <!-----Registro Usuario------->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well well-sm">
+                    
+                    <form class="form-horizontal" action="{% url 'REGI' %}" method="POST" onsubmit="return validarTodo()">
+                    {% csrf_token %}
+                        <fieldset>
+                            <legend class="text-center header">Formulario de Usuario</legend>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-user bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtNombre" name="Nombre" type="text" placeholder="Nombre" minlength="3"
+                                        maxlength="80" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-envelope-o bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtApellido" name="Apellido" type="text" placeholder="Apellido"
+                                        minlength="3" maxlength="80" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-phone-square bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtEmail" name="phone" type="email" placeholder="@Email"
+                                        class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-phone-square bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtUsuario" name="Usuario" type="text" placeholder="Nombre de Usuario"
+                                        minlength="8" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-phone-square bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtContraseña" name="Contraseña" type="password" placeholder="Contraseña"
+                                        minlength="8" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="col-md-1 col-md-offset-2 text-center"><i
+                                        class="fa fa-phone-square bigicon"></i></span>
+                                <div class="col-md-8">
+                                    <input id="txtRepetirContraseña" name="RepetirContraseña" type="password" placeholder="Repetir Contraseña"
+                                        minlength="8" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg"
+                                        value="validarTodo()">Enviar</button>
+                                        {% block js %}
+                                        <script src="{% static 'js/script.js'%}"></script>
+                                        {% endblock js %}
+                                        
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!------Fin del registro------>
+    {% if messages %}
+            {% for message in messages %}
+                <div class="msg msg-{{ message.tags }}" style="text-align: center;">
+                    <h4>{{ message }}</h4>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+{% endblock container %}
+
+    

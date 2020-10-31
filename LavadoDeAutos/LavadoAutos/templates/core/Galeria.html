@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block estilos %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    ntegrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'dist/css/lightbox.min.css'%}">
+{% endblock estilos %}
+
+
+
+{% block container %}
+<!--Inicio Galeria-->
+<h1>Personal</h1>
+<span class="linea"></span>
+<section class="galeria">
+    {% for item in lista_empleados %}
+    <div>
+      <a href="{{item.imagen.url}}" data-lightbox="empleados" data-title="{{item.name}}"><img src="{{item.imagen.url}}" alt=""/></a>
+    </div>
+    {% endfor %}
+</section>
+<!--Fin Galeria----->
+
+<h1>Instalaciones</h1>
+<span class="linea"></span>
+<section class="galeria">
+    {% for item in lista_instalaciones %}
+    <div>
+      <a href="{{item.imagen.url}}" data-lightbox="instalaciones" data-title="{{item.name}}"><img src="{{item.imagen.url}}" alt=""/></a>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock container %}
+
+{% block scripts %}
+<script src="{% static 'dist/js/lightbox-plus-jquery.min.js' %}"></script>
+{% endblock scripts %}

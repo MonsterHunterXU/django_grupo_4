@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+{% load static %}
+<!-- Inicio de Modificar Insumos-->
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                {% block titulo %}
+                <form class="form-horizontal" action="{% url 'ACTU' %}" method="post"
+                    onsubmit="return validarInsumos()">
+                    {% endblock titulo %}
+                    <fieldset>
+                        {% csrf_token %}
+                        <legend class="text-center header">Modificacion de Insumos</legend>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                            <div class="col-md-8">
+                                <input id="txtNombreInsumo" name="NombreInsumo" value="{{item.nombreinsumo}}"
+                                    type="text" placeholder="Nombre" class="form-control" minlength="3" maxlength="80"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                            <div class="col-md-8">
+                                <input id="txtPrecio" name="Precio" value="{{item.precio}}" type="text" placeholder="$"
+                                    min="1" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
+                            <div class="col-md-8">
+                                <input id="txtStock" name="Stock" value="{{item.stock}}" type="text" placeholder="Stock"
+                                    min="0" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"><i
+                                    class="fa fa-pencil-square-o bigicon"></i></span>
+                            <div class="col-md-8">
+                                <textarea class="form-control" value="{{item.descripcion}}" id="txtDescripcion"
+                                    name="Descripcion" placeholder="Descripcion" rows="7" minlength="3"
+                                    maxlength="200"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" name="accion" class="btn btn-primary btn-lg"
+                                    value="Modificar">Modificar</button>
+                                <script src="{% static 'js/script.js'%}"></script>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+<!-- Final de Modificar Insumos-->

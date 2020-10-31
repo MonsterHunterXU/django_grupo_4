@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{{% block container %}
+    <!-- inicio de comentarios-->
+    <div class="container">
+        
+        <div class="row">
+          <div class="col-lg-4">
+            <img src="{% static 'img/usuario/usuario1.jpg' %}"    width="140" height="140" style="border-radius: 100%;" >
+            <h2>Sometic Estey</h2>
+            <p>Esta pagina es muy util para poder guiarte y ver totalmente recomendada.</p>
+            
+          </div>
+          <div class="col-lg-4">
+            <img src="{% static 'img/usuario/usuario2.jpg' %}" width="140" height="140" style="border-radius: 100%;">
+            <h2>Mercedes Estons</h2>
+            <p>La pagina cuenta con buena informacion y buenos servicios.</p>
+            
+          </div>
+          <div class="col-lg-4">
+            <img src="{% static 'img/usuario/usuario3.jpg' %}" width="140" height="140" style="border-radius: 100%;">
+            <h2>Juan Alvaro</h2>
+            <p>Esta pagina es muy buena y su atencion tambien :D.</p>
+            
+          </div>
+        </div>
+    </div>
+    <!-- Final de comentarios-->
+{% endblock container %}
+    
+
+
+        
+        
+        
+
+
+        

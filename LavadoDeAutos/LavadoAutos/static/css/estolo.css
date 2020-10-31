@@ -1,0 +1,89 @@
+
+
+.footer {
+  margin-top: 7%;
+  border: 5px rgb(168, 164, 164);
+  left: 0;
+  bottom: 0;
+  height: 5%;
+  width: 100%;
+  background-color: none;
+  color: black;
+  text-align: center;
+  float: left;  
+  
+}
+
+.mapa{
+
+  margin: 10px;
+  text-align: center;
+  margin-top: 10px;
+  
+}
+
+/*Estilo Galeria*/
+*{
+  box-sizing: border-box;
+  margin-top: 0;
+  padding: 0;
+}
+
+body{
+  font-family: 'Kurale', serif;
+}
+
+h1{
+  font-weight: 300;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 40px;
+}
+
+.linea{
+  background: black;
+  height: 5px;
+  width: 100%;
+  display: block;
+}
+
+.galeria{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  width: 95%;
+  margin: auto;
+  grid-gap: 10px;
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+.galeria img{
+  width: 100%;
+  vertical-align: top;
+  height: 300px;
+  object-fit: cover;
+}
+
+.galeria > a{
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(0, 0,  0, .5);
+} 
+
+/*Registros*/
+.header {
+  color: #36A0FF;
+  font-size: 27px;
+  padding: 10px;
+}
+
+.bigicon {
+  font-size: 35px;
+  color: #36A0FF;
+}
+
+
+
+
+

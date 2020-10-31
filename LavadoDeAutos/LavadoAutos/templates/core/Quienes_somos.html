@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block container %}
+<!--Inicio del contenedor Visión -->
+
+<div class="container-fluido p-3 my-3 bg-dark text-white">
+    <h4>Vision</h4>
+    <p class="font-italic">{{vision.descripcion}}</p>
+<!--Final del contenedor Visión -->
+</div>
+
+<!-- Inicio del Mapa-->
+<div class="mapa">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d829.726338544256!2d-70.74029317082203!3d-33.71139788320399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDQyJzQxLjAiUyA3MMKwNDQnMjMuMSJX!5e0!3m2!1ses-419!2scl!4v1603228582301!5m2!1ses-419!2scl"
+        width="89%" height="400" frameborder="0" style="border:solid rgb(94, 90, 90); border-radius: 10px;"
+        allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+</div>
+<!-- final del Mapa-->
+
+<div>
+
+    <!--Inicio contenedor  mision-->
+    <div class="container-fluido p-3 my-3 bg-dark text-white">
+        <h4>Misión</h3>
+            <p class="font-italic">{{mision.descripcion}}</p>
+    </div>
+ 
+    <!-- final contenedor mision -->
+</div>
+{% endblock container %}
