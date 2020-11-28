@@ -1,9 +1,42 @@
 from django.shortcuts import render, redirect
-from .models import Insumos, Instalaciones, Empleados, Mision, Vision, Slider
+from .models import Insumos, Instalaciones, Empleados, Mision, Vision, Slider, TipoContacto, Contacto
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,logout,login as iniciosesion
 from django.contrib.auth.decorators import login_required,permission_required
 from django.contrib import messages
+import requests
+
+#Import de los token
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.core import serializers
+import json
+from fcm_django.models import FCMDevice
+
+#Creacion de la funcion
+@csrf_exempt
+@require_http_methods(['POST'])
+def guardar_token(request):
+    body = request.body.decode('utf-8')
+    datos_body = json.loads(body)
+    token = datos_body['token']
+    # preguntar si el token existe
+    existe = FCMDevice.objects.filter(registration_id=token,active=True)
+    if len(existe)>0:
+        return HttpResponseBadRequest(json.dumps({'mensaje','el token existe'}))
+    dispositivo = FCMDevice()
+    dispositivo.registration_id = token
+    dispositivo.active = True
+    # solo si el usuario esta registrado antes
+    if request.user.is_authenticated:
+        dispositivo.user = request.user
+    # grabar el dipositivo
+    try:
+        dispositivo.save()
+        return HttpResponse(json.dumps({'mensaje','dispositivo almacenado'}))
+    except:
+        return HttpResponseBadRequest(json.dumps({'mensaje','no pudo almacenar el token'}))
 
 # Create your views here.
 def logout_vista(request):
@@ -117,7 +150,12 @@ def admin_insumos(request):
                 stock       = stock
             )
             insumos.save()
-            messages.success(request, 'Se agregó un insumo')
+            dispositivos = FCMDevice.objects.filter(active=True)
+            dispositivos.send_message(
+                title='Nuevo Insumo Agregado',
+                body='Se agrego un nuevo insumo al sistema'+ nombre,
+                icon='/static/img/iconos-pack1/png/008-car service.png'
+            )
 
             return redirect(admin_insumos)
 
@@ -168,3 +206,40 @@ def Actualizar(request):
             messages.info(request, 'No se pudo Actualizar Correctamente')
 
         return redirect(admin_insumos)
+
+def contacto(request):
+    tipo = TipoContacto.objects.all()
+    con = Contacto.objects.all()
+    sliderFirst = Slider.objects.first()
+    sliderLast  = Slider.objects.last()
+    slider = Slider.objects.all()
+    
+    if request.POST:
+        accion = request.POST.get("accion")
+
+        if accion == "enviar":
+            nombre      = request.POST.get("Nombre")
+            apellido      = request.POST.get("Apellido")
+            asunto       = request.POST.get("Asunto")
+            tipocon = request.POST.get("TipoContacto")
+            obj_contacto = TipoContacto.objects.get(cod=tipocon)
+            mensaje = request.POST.get("Mensaje")
+
+            con = Contacto(
+                name = nombre,
+                lastname = apellido,
+                asunto = asunto,
+                tipoContacto = obj_contacto,
+                mensaje = mensaje
+            )
+            con.save()
+            dispositivos = FCMDevice.objects.filter(active=True)
+            dispositivos.send_message(
+                title='Contacto Agregado',
+                body='Se agrego un nuevo contacto al sistema '+ nombre + apellido,
+                icon='/static/img/iconos-pack2/png/015-employee.png'
+            )
+
+            return redirect(contacto)
+
+    return render(request, 'core/contacto.html', {'lista_contacto':tipo, 'slider':slider, 'first':sliderFirst, 'last':sliderLast})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Insumos, Instalaciones, Empleados, Slider, Mision, Vision
+from .models import Insumos, Instalaciones, Empleados, Slider, Mision, Vision, TipoContacto, Contacto
 
 class InsumoAdmin(admin.ModelAdmin):
     list_display=['nombreinsumo','precio','descripcion','stock']
@@ -35,6 +35,17 @@ class VisionAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_per_page = 10
 
+class TipoContactoAdmin(admin.ModelAdmin):
+    list_display = ['cod','name']
+    search_fields = ['cod']
+    list_per_page = 10
+
+class ContactoAdmin(admin.ModelAdmin):
+    list_display = ['cod','name', 'lastname', 'tipoContacto','asunto', 'mensaje']
+    search_fields = ['name', 'lastname']
+    list_filter=['name','lastname']
+    list_per_page = 10
+
 # Register your models here.
 admin.site.register(Insumos, InsumoAdmin)
 admin.site.register(Instalaciones, InstalacionesAdmin)
@@ -42,3 +53,6 @@ admin.site.register(Empleados, EmpleadosAdmin)
 admin.site.register(Slider, SliderAdmin)
 admin.site.register(Mision, MisionAdmin)
 admin.site.register(Vision, VisionAdmin)
+admin.site.register(TipoContacto, TipoContactoAdmin)
+admin.site.register(Contacto, ContactoAdmin)
+

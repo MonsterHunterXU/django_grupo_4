@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SOCIAL_AUTH_FACEBOOK_KEY = '381029859824337'
+SOCIAL_AUTH_FACEBOOK_SECRET = '58f86244b0502dafe98f9a5338a39b51'
+
 
 # Application definition
 
@@ -39,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'LavadoAutos.apps.LavadoautosConfig', #Agregar la aplicacion al proyecto
+    'api.apps.ApiConfig', #Agregar Api
+    'rest_framework',
+    'social_django',
+    'pwa',
+    'fcm_django',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'LavadoDeAutos.urls'
@@ -64,6 +73,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
             ],
         },
     },
@@ -119,7 +131,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'serviceworker.js')
+
+LOGIN_REDIRECT_URL = '/'
+
+
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#Configuracion FCM
+
+FCM_DJANGO_SETTINGS = {
+         # default: _('FCM Django')
+        "APP_VERBOSE_NAME": "djangogrupo4002d",
+         # Your firebase API KEY
+        "FCM_SERVER_KEY": "AAAAdR5P8aE:APA91bF3qYrvT3ytDAWLE5ug-uzXOhSBiwR-DVrzrmM2B8Rsh7reTWBpNgLwm4Z2I5RNRgvirbf37YwnnWAPJG3hRT2LdERxIcGtO--giXAPyqp0oFla_DW7eiJeUb0xYjzlozbxASUq",
+         # true if you want to have only one active device per registered user at a time
+         # default: False
+        "ONE_DEVICE_PER_USER": False,
+         # devices to which notifications cannot be sent,
+         # are deleted upon receiving error response from FCM
+         # default: False
+        "DELETE_INACTIVE_DEVICES": True,
+}

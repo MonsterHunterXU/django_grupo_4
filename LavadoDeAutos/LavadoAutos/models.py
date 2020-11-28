@@ -46,3 +46,22 @@ class Instalaciones(models.Model):
 
     def __str__(self):
         return self.name
+
+class TipoContacto(models.Model):
+    cod       = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class Contacto(models.Model):
+    cod       = models.IntegerField(primary_key=True)
+    name      = models.CharField(max_length=50)
+    lastname  = models.CharField(max_length=50)
+    asunto    = models.CharField(max_length=50)
+    tipoContacto = models.ForeignKey(TipoContacto,on_delete=models.CASCADE)
+    mensaje = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+

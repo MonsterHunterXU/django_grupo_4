@@ -11,6 +11,68 @@
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     {% block estilos %}
     {% endblock estilos %}
+
+    {% load pwa %}
+    {% progressive_web_app_meta %}
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!--<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script> ----->
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDYdyWrPIrK2pRxgGpHfpv8WtXpkSzImVw",
+        authDomain: "djangogrupo4002d.firebaseapp.com",
+        databaseURL: "https://djangogrupo4002d.firebaseio.com",
+        projectId: "djangogrupo4002d",
+        storageBucket: "djangogrupo4002d.appspot.com",
+        messagingSenderId: "503019729313",
+        appId: "1:503019729313:web:40beaea3e2c9be308ddbe0"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    ///////////////////////////////////////
+    let messaging = firebase.messaging();
+
+    navigator.serviceWorker
+    .register('serviceworker.js')
+    .then(function(register){
+         messaging.useServiceWorker(register);
+         // para pedir permiso /////
+         messaging.requestPermission()
+         .then(function(){
+             console.log("usuario acepto recibir notificaciones")
+             // crear un token 
+             return messaging.getToken();
+         })
+         .then(function(token){
+             // podemos ver el token de seguridad
+             console.log(token)
+             fetch('guardar-token/',{
+             method:'post',
+             headers:{
+                     'Content-Type':'application/json',
+                     'Accept':'application/json'
+            },
+             body:JSON.stringify({
+                'token':token
+            })
+       })
+         })
+         .catch(function(e){
+             console.log("usuario no desea recibir notificaciones")
+         })
+     })
+    ///////////////////////////////////////
+    
+    </script>
+
 </head>
 
 <body>
@@ -36,8 +98,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'ADMI' %}">Administracion de Insumos</a>
                 </li>
-                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'CON' %}">Contacto</a>
+                </li>
                 <div class="form-inline mt-2 mt-md-0">
+                {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'LOGOUT' %}">Cerrar Sesion</a>
                     </li>
@@ -51,8 +116,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'REGI' %}">Registro de Usuario</a>
                     </li>
-                </div>
                 {% endif %}
+                </div>
             </ul>
         </div>
     </nav>
